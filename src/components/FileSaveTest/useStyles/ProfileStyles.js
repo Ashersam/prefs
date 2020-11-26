@@ -30,7 +30,7 @@ export const ProfileStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(20),
   },
   avataredits: {
-    marginLeft: theme.spacing(14),
+    marginLeft: theme.spacing(5),
   },
   save: {
     float: 'right',

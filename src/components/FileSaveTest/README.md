@@ -47,12 +47,12 @@ function Component() {
         validationMessage,
         initialValue
       },
-        action: { 
-          setBackendStore, 
-          updateStorage
+        action: {
+          updateStorage,
+          deleteStorage
         }
     } = usePrefs({ 
-            key: "settings1",  
+            key: "settings2",  
             values: values, 
             backendfn: selectedBackendstore, 
             tag: "profile",
@@ -71,6 +71,7 @@ function Component() {
       };
 
     useEffect(() => {
+      console.log(initialValue)
         initialValue.then((res) => {
           if(res!==null)
             setValues(res)
@@ -83,6 +84,10 @@ function Component() {
 
     const update = (event) => {
         updateStorage()
+    }
+
+    const deleteStore = () => {
+        deleteStorage()
     }
 
   const form = React.useMemo(
@@ -183,12 +188,23 @@ function Component() {
           </Select>
                 </FormControl>
               </div>
+              <span>
               <Button
                 variant="contained"
+                color="primary"
                 onClick={update}
               >
               Update
               </Button>
+              <Button
+                className={classes.avataredits}
+                variant="contained"
+                color="secondary"
+                onClick={deleteStore}
+              >
+              Delete
+              </Button>
+              </span>
             </form>
           </Grid>
         </Grid>

@@ -1,12 +1,16 @@
 import { useCallback, useEffect, useState } from 'react';
 import { getInitialValue } from '../../core/backend';
-import { tolocalStorageCreate, updateLocalStorage, readLocalStorage } from '../../core/tolocaStorage';
+import { deleteLocalStorage, tolocalStorageCreate, updateLocalStorage } from '../../core/tolocaStorage';
 import useValidation from './useValidator';
 
 const isFunction = async(backendfn) => {
-  if (backendfn instanceof Function) {
-    return backendfn
-  }
+  try {
+    if (backendfn instanceof Function) {
+      return backendfn
+    }
+  } catch (error) {
+      return error
+    }
 }
  
 export default function usePrefs({ 
@@ -37,6 +41,7 @@ export default function usePrefs({
 
     const setBackendStore = useCallback(() => {
       isFunction(backendfn).then((res) => {
+        console.log(res)
         if(res){
           storeToCuston(res)
         }
@@ -52,7 +57,11 @@ export default function usePrefs({
 
     const updateStorage = () => {
       updateLocalStorage(backendfn, values, validator, key)
-    }   
+    }
+    
+    const deleteStorage = useCallback(() => {
+      deleteLocalStorage(backendfn, validator, key, tag)
+    }, [deleteStorage, backendfn])
 
   return {
     state: { 
@@ -62,7 +71,8 @@ export default function usePrefs({
     },
     action: { 
       setBackendStore, 
-      updateStorage
+      updateStorage,
+      deleteStorage
     }
   };
 }

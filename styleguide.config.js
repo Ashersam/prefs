@@ -10,30 +10,6 @@ let sections = [
 		content: 'README.md',
 	},
 	{
-		name: 'Hello',
-		components: () => {
-			const componentNames = [
-				'hello-name',
-			];
-			return componentNames.map(componentName => {
-				const filename = upperFirst(camelCase(componentName));
-				return path.resolve(__dirname, `src/components/${componentName}`, `${filename}.js`)
-			});
-		}
-	},
-	{
-		name: 'Button',
-		components: () => {
-			const componentNames = [
-				'button-test',
-			];
-			return componentNames.map(componentName => {
-				const filename = upperFirst(camelCase(componentName));
-				return path.resolve(__dirname, `src/components/${componentName}`, `${filename}.js`)
-			});
-		}
-	},
-	{
 		name: 'FieldWrite',
 		components: () => {
 			const componentNames = [

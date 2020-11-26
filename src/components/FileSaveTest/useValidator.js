@@ -27,10 +27,12 @@ export default function useValidation({
                 }
               break;
             case 'localForage':
-                localForage.getItem(`${key}`, (err, value) => {
+                 localForage.getItem(`${key}`, (err, value) => {
+                   console.log(value)
                   if(value){
                     setValidator({ ...validator, [backendStore]: true });
                     SetValidatoinMessage("Same Key exists")
+                    console.log(backendStore, validator)
                   }else if( value=== null ) {
                     setValidator({ ...validator, [backendStore]: false });
                     SetValidatoinMessage("")
