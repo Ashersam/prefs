@@ -1,1 +1,1 @@
-export {default} from './CustomSave' 
+export * from './CustomSave' 

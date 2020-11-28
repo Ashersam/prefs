@@ -1,6 +1,6 @@
 import * as localForage from 'localforage';
 
-export function getInitialValue (key, initValue) {
+export function getInitialValue (key) {
     try {
         const value = localForage.getItem(key);
         return value

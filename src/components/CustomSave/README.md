@@ -24,11 +24,9 @@ function Component() {
           validationMessage 
         },
         action: { 
-          setBackendStore
+          custom
         }
-      } = usePrefs({ 
-        key: "profile",  
-        values: values, 
+      } = usePrefs({
         backendfn: WriteToFile 
       })
       const [showLoading, setShowLoading] = useState(false)
@@ -46,7 +44,10 @@ function Component() {
       };
 
     const WriteAndDownload = () => {
-      setBackendStore()
+      custom({ 
+        key: 'settings_custom',
+        values: values
+      })
       if(validationError) setShowLoading(true)
       let timer1 = setTimeout(() => setShowLoading(false), 2000)
            return () => {
@@ -138,9 +139,10 @@ function Component() {
                 </FormControl>
               </div>
               <Button
+              color="primary"
             variant="contained"
             onClick={WriteAndDownload}
-            >CustomWrite</Button>
+            >Save</Button>
             </form>
           </Grid>
         </Grid>

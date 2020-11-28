@@ -1,7 +1,7 @@
 {
   "name": "prefs-rcl",
   "description": "A Components for handling all preferences needed in an app.",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "private": false,
   "homepage": "https://github.com/Bridgeconn/prefs",
   "repository": {
@@ -14,13 +14,10 @@
   },
   "scripts": {
     "dev": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "styleguidist build",
+    "deploy": "git push",
     "prepublishOnly": "rm -fr ./dist & babel ./src --out-dir ./dist -s inline",
-    "predeploy": "yarn styleguide:build",
-    "deploy": "gh-pages -d styleguide",
-    "postpublish": "yarn deploy",
-    "start": "styleguidist server",
-    "styleguide:build": "styleguidist build",
+    "predeploy": "yarn build",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
     "nyc:report": "nyc report --reporter=json-summary --reporter=text",
@@ -37,6 +34,7 @@
     "lodash": "^4.17.15",
     "prop-types": "^15.7.2",
     "react": "^16.9.0",
+    "react-scripts": "^2.1.5",
     "react-dom": "^16.9.0",
     "react-styleguidist": "^9.1.14",
     "yarn": "^1.22.10"
@@ -46,6 +44,12 @@
     "@babel/plugin-proposal-class-properties": "^7.5.5",
     "@babel/preset-env": "^7.5.5",
     "@babel/preset-react": "^7.0.0",
+    "@babel/cli": "^7.2.3",
+    "babel-preset-react-app": "^7.0.1",
+    "eslint-config-react-app": "^5.0.1",
+    "eslint-plugin-react-hooks": "^1.0.1",
+    "gh-pages": "^2.0.1",
+    "rimraf": "^2.6.3",
     "@cypress/code-coverage": "^1.10.2",
     "babel-loader": "^8.0.6",
     "babel-plugin-istanbul": "^5.2.0",
@@ -65,8 +69,14 @@
     "not ie <= 11",
     "not op_mini all"
   ],
+  "keywords": [
+    "preference",
+    "rcl",
+    "app-prefs"
+  ],
   "main": "dist/index.js",
   "files": [
     "dist/*"
-  ]
+  ],
+  "module": "dist/index.js"
 }

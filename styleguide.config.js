@@ -64,7 +64,7 @@ module.exports = {
 	components: 'src/components/**/[A-Z]*.js',
 	defaultExample: true,
 	moduleAliases: {
-		'rsg-example': path.resolve(__dirname, 'src'),
+		'prefs-rcl': path.resolve(__dirname, 'src'),
 	},
 	version,
 	webpackConfig: {

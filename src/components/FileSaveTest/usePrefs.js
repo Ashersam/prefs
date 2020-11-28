@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { getInitialValue } from '../../core/backend';
-import { deleteLocalStorage, tolocalStorageCreate, updateLocalStorage } from '../../core/tolocaStorage';
+import { deleteStorage, storageCreate } from '../../core/tolocaStorage';
 import useValidation from './useValidator';
 
 const isFunction = async(backendfn) => {
@@ -14,65 +14,91 @@ const isFunction = async(backendfn) => {
 }
  
 export default function usePrefs({ 
-  key, 
-  values, 
-  backendfn, 
-  tag 
+  backendfn,
 }) {
   const { 
     validator, 
     validationMessage, 
-    keyExists, 
-    setValidator } 
-    = useValidation({ 
-      key: key, 
+    keyExists,
+  } = useValidation({ 
       backendStore: backendfn.type
     })
 
-    const [ initialValue ] = useState(getInitialValue(key, values))
+    const [ storage, setStorage ] = useState("")
+    const [ customStore, setCustomStore ] = useState("")
 
     useEffect(() => {
-      setBackendStore()
+      storeConfig()
     }, [backendfn])
-
-    useEffect(() => {
-      keyExists()
-    },[])
-
-    const setBackendStore = useCallback(() => {
+    
+    const storeConfig = useCallback(() => {
       isFunction(backendfn).then((res) => {
-        console.log(res)
         if(res){
-          storeToCuston(res)
+        //   setCustomStore(res)
+          // custom(res, key, values)
+          const customfun =  res
+          // Do custom function configuration here
         }
         else{
-          tolocalStorageCreate(backendfn, values, tag, validator, key, keyExists)
+          setStorage(backendfn)
+          // tolocalStorageCreate(backendfn, values, tag, validator, key, keyExists)
         }
       })
-    },[key, backendfn, values, tag, validator])
+    },[backendfn])
 
-    const storeToCuston = (customFn) => {
-      customFn(key, JSON.stringify(values))
+    const custom = ({
+        key,
+        values
+    }) => {
+        backendfn(key, JSON.stringify(values))
     }
 
-    const updateStorage = () => {
-      updateLocalStorage(backendfn, values, validator, key)
+    const readItem = ({
+      key
+    }) => {
+        const initialValue = getInitialValue(key)
+        return initialValue
+    }
+
+    const setItem = ({
+        key, 
+        values,
+        tag
+    }) => {
+        console.log(validator)
+        try {
+            const _storageCreate =  storageCreate(backendfn, values, tag, validator, key, keyExists)
+            return _storageCreate
+        } 
+        catch (error) {
+            throw error
+        }
     }
     
-    const deleteStorage = useCallback(() => {
-      deleteLocalStorage(backendfn, validator, key, tag)
-    }, [deleteStorage, backendfn])
+    const deleteItem = ({
+        key,
+        tag
+    }) => {
+        
+        try {
+            const _deleteStorage =  deleteStorage(backendfn, validator, key, tag, keyExists)
+            return _deleteStorage
+        } 
+        catch (error) {
+            throw error
+        }
+    }
 
   return {
     state: { 
       validator,
       validationMessage,
-      initialValue
     },
-    action: { 
-      setBackendStore, 
-      updateStorage,
-      deleteStorage
+    action: {
+      readItem,
+      setItem,
+      deleteItem,
+      custom,
     }
   };
 }
